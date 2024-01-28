@@ -1,10 +1,11 @@
-package org.example;
+package org.example.server;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.*;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -53,14 +54,14 @@ public class Server {
         }
     }
 
-    protected void createThreadForUser(Socket clientSocket) {
+    public void createThreadForUser(Socket clientSocket) {
         UserThread clientInThread = new UserThread(clientSocket);
         listUserThreads.add(clientInThread);
         Thread thread = new Thread(clientInThread);
         thread.start();
     }
 
-    protected void getSettings() {
+    public void getSettings() {
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(new FileReader("settings.json"));
@@ -71,11 +72,11 @@ public class Server {
         }
     }
 
-    protected int getPort() {
+    public int getPort() {
         return port;
     }
 
-    protected List<UserThread> getListUserThreads() {
+    public List<UserThread> getListUserThreads() {
         return listUserThreads;
     }
 }

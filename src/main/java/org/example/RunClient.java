@@ -1,6 +1,8 @@
 package org.example;
 
-public class RunClient1 {
+import org.example.client.Client;
+
+public class RunClient {
     public static void main(String[] args) {
         Client client = new Client();
         client.runClient();

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.client;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -22,7 +22,7 @@ public class Client {
     private int port;
 
 
-    Boolean isConnection = true;
+    private Boolean isConnection = true;
 
     public void runClient() {
         getSettings();
@@ -51,13 +51,13 @@ public class Client {
         }
     }
 
-    protected void outClose(PrintWriter out) {
+    public void outClose(PrintWriter out) {
         if (out != null) {
             out.close();
         }
     }
 
-    protected void inClose(BufferedReader in) {
+    public void inClose(BufferedReader in) {
         if (in != null) {
             try {
                 in.close();
@@ -67,7 +67,7 @@ public class Client {
         }
     }
 
-    protected void socketClose(Socket socket) {
+    public void socketClose(Socket socket) {
         try {
             if (socket != null) {
                 socket.close();
@@ -77,7 +77,7 @@ public class Client {
         }
     }
 
-    protected void getAnswers(BufferedReader in) {
+    public void getAnswers(BufferedReader in) {
         String answer;
         while (isConnection) {
             try {
@@ -97,7 +97,7 @@ public class Client {
         }
     }
 
-    protected void getSettings() {
+    public void getSettings() {
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(new FileReader("settings.json"));
@@ -109,23 +109,23 @@ public class Client {
         }
     }
 
-    protected int getPort() {
+    public int getPort() {
         return port;
     }
 
-    protected String getHost() {
+    public String getHost() {
         return host;
     }
 
-    protected String getNickName() {
+    public String getNickName() {
         return nickName;
     }
 
-    protected void setClientLog() {
+    public void setClientLog() {
         clientLog = ClientLog.createClientLog();
     }
 
-    protected void createNickName(PrintWriter out, ClientLog clientLog) {
+    public void createNickName(PrintWriter out, ClientLog clientLog) {
         System.out.println("Enter your nickname");
         scanner = new Scanner(System.in);
         nickName = scanner.nextLine();
@@ -133,7 +133,7 @@ public class Client {
         clientLog.writeToLogFileClient("New user join. NickName = " + nickName);
     }
 
-    protected void sendMessage(PrintWriter out) {
+    public void sendMessage(PrintWriter out) {
         scanner = new Scanner(System.in);
         String message;
         while (true) {

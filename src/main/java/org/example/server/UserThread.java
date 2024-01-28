@@ -1,10 +1,13 @@
-package org.example;
+package org.example.server;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
-import static org.example.CurrentTime.getCurrentTime;
-import static org.example.Server.listUserThreads;
+import static org.example.server.Server.listUserThreads;
+import static org.example.util.CurrentTime.getCurrentTime;
 
 public class UserThread implements Runnable {
     private Socket clientSocket;
@@ -40,7 +43,7 @@ public class UserThread implements Runnable {
         clientSocketClose(clientSocket);
     }
 
-    protected void inClose(BufferedReader in) {
+    public void inClose(BufferedReader in) {
         if (in != null) {
             try {
                 in.close();
@@ -50,13 +53,13 @@ public class UserThread implements Runnable {
         }
     }
 
-    protected void outClose(PrintWriter out) {
+    public void outClose(PrintWriter out) {
         if (out != null) {
             out.close();
         }
     }
 
-    protected void clientSocketClose(Socket clientSocket) {
+    public void clientSocketClose(Socket clientSocket) {
         try {
             if (clientSocket != null) {
                 clientSocket.close();
@@ -66,7 +69,7 @@ public class UserThread implements Runnable {
         }
     }
 
-    protected int sendAllClients(String message) {
+    public int sendAllClients(String message) {
         int countMessageRecepient = 0;
         for (UserThread userThread : listUserThreads) {
             userThread.getOut().println(getCurrentTime() + message);
@@ -79,14 +82,14 @@ public class UserThread implements Runnable {
         sendAllClients("[" + nickName + "] " + message);
     }
 
-    protected void userLeaveChat() {
+    public void userLeaveChat() {
         listUserThreads.remove(this);
         isUserLeaveChat = true;
         sendAllClients(nickName + " leave chat");
         serverLog.writeToLogFileServer("User nickName = " + nickName + " leave chat");
     }
 
-    protected void readMessage(BufferedReader in, PrintWriter out) {
+    public void readMessage(BufferedReader in, PrintWriter out) {
         String message;
         try {
             message = in.readLine();
@@ -103,27 +106,27 @@ public class UserThread implements Runnable {
         }
     }
 
-    protected PrintWriter getOut() {
+    public PrintWriter getOut() {
         return this.out;
     }
 
-    protected void setOut(Socket clientSocket) throws IOException {
+    public void setOut(Socket clientSocket) throws IOException {
         out = new PrintWriter(clientSocket.getOutputStream(), true);
     }
 
-    protected BufferedReader getIn() {
+    public BufferedReader getIn() {
         return this.in;
     }
 
-    protected void setIn(Socket clientSocket) throws IOException {
+    public void setIn(Socket clientSocket) throws IOException {
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
     }
 
-    protected boolean getisUserLeaveChat() {
+    public boolean getisUserLeaveChat() {
         return isUserLeaveChat;
     }
 
-    protected void setServerLog() {
+    public void setServerLog() {
         serverLog = ServerLog.createServerLog();
     }
 

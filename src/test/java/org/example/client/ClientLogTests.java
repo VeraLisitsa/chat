@@ -1,4 +1,4 @@
-package org.example;
+package org.example.client;
 
 import org.apache.commons.io.input.ReversedLinesFileReader;
 import org.junit.jupiter.api.AfterEach;

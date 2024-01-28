@@ -1,8 +1,10 @@
-package org.example;
+package org.example.client;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
-import static org.example.CurrentTime.getCurrentTime;
+import static org.example.util.CurrentTime.getCurrentTime;
 
 public class ClientLog {
 
@@ -33,11 +35,11 @@ public class ClientLog {
         }
     }
 
-    protected File getFile() {
+    public File getFile() {
         return logFileClient;
     }
 
-    protected void createLogFileClient() {
+    public void createLogFileClient() {
         logFileClient = new File(NAME_FILE_LOG_CLIENT);
         try {
             logFileClient.createNewFile();

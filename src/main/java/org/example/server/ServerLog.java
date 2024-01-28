@@ -1,10 +1,10 @@
-package org.example;
+package org.example.server;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static org.example.CurrentTime.getCurrentTime;
+import static org.example.util.CurrentTime.getCurrentTime;
 
 public class ServerLog {
     private static ServerLog serverLog;
@@ -16,14 +16,14 @@ public class ServerLog {
         createLogFileServer();
     }
 
-    protected static ServerLog createServerLog() {
+    public static ServerLog createServerLog() {
         if (serverLog == null) {
             serverLog = new ServerLog();
         }
         return serverLog;
     }
 
-    protected void writeToLogFileServer(String message) {
+    public void writeToLogFileServer(String message) {
         try {
             writerLogFileServer.write(getCurrentTime() + message + "\n");
             writerLogFileServer.flush();
@@ -32,7 +32,7 @@ public class ServerLog {
         }
     }
 
-    protected void createLogFileServer() {
+    public void createLogFileServer() {
         logFileServer = new File(NAME_LOG_FILE_SERVER);
         try {
             logFileServer.createNewFile();
@@ -42,7 +42,7 @@ public class ServerLog {
         }
     }
 
-    protected File getFile() {
+    public File getFile() {
         return logFileServer;
     }
 }
